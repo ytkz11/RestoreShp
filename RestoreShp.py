@@ -6,7 +6,6 @@
 import os
 import shutil
 from struct import unpack
-from dbfpy3 import dbf
 import dbf
 
 class RestoreShp(object):
@@ -28,7 +27,7 @@ class RestoreShp(object):
         self.copyfile
     @property
     def copyfile(self):
-        # copy shp dbf shx file to outpath
+        # 读取shp文件
         shutil.copyfile(self.file, self.outfile[0])
         shutil.copyfile(self.dbffile, self.outfile[1])
         shutil.copyfile(os.path.splitext(self.file)[0] + '.shx', self.outfile[2])
@@ -76,7 +75,13 @@ class RestoreShp(object):
                 table.pack()
 
 if __name__ == '__main__':
-    file = r'D:\Examplet_restore_reduce.shp'
-    outpath = r'D:\outpath\reduce'
-    record_num = RestoreShp(file, outpath).restore_shp()
+    file = input('Please enter the path of the shp file: ')
+    outpath = input('Please enter the path of the output file: ')
+
+    if os.path.exists(file) :
+        record_num = RestoreShp(file, outpath).restore_shp()
+        print('complete')
+    else:
+        print('File does not exist')
+
 
